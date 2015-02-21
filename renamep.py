@@ -14,12 +14,17 @@ os.rename("./qml/"+oldname+".qml","./qml/"+newname+".qml")
 os.rename("./dat/"+oldname+".desktop","./dat/"+newname+".desktop")
 os.rename("./dat/"+oldname+".sh","./dat/"+newname+".sh")
 
-makefile=open("./Makefile","r")
-maketxt=makefile.read()
-makefile.close()
-makefile=open("./Makefile","w")
-makefile.write(re.sub("Appname:="+oldname,"Appname:="+newname,maketxt))
-makefile.close()
+def replaceInFile(oldname,newname,filename):
+    makefile=open(filename,"r")
+    maketxt=makefile.read()
+    makefile.close()
+    makefile=open(filename,"w")
+    makefile.write(re.sub("Appname:="+oldname,"Appname:="+newname,maketxt))
+    makefile.close()
+
+for filename in ["./Makefile","./dat/"+newname+".desktop"]:
+    replaceInFile(oldname,newname,filename)
+
 
 namefile=open("./appname.txt","w")
 namefile.write(newname+"\n")
