@@ -21,7 +21,7 @@ build your package, and install it on your jolla phone, considering your develop
 
 
 Adding dependencies:
-a basic set of dependencies are already added to the Makefile, but you can still add other ones to the list.
+a basic set of dependencies for python3 apps are already added to dependencies.txt, but you can still add other ones to the list.
 
 Adding python Modules:
 all python Modules in pyPackages are included in the package. 

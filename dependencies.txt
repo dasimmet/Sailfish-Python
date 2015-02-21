@@ -1,0 +1,3 @@
+libsailfishapp-launcher
+python3-base
+pyotherside-qml-plugin-python3-qt5
