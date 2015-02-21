@@ -3,6 +3,6 @@ import Sailfish.Silica 1.0
 
 CoverBackground {
     CoverPlaceholder {
-        text: "Sailfish Scanner"
+        text: "Sailfish Python"
     }
 }
