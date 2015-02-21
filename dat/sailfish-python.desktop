@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Name=Scanner
+Icon=icon-launcher-component-gallery
+Exec=sailfish-qml sailfish-scanner
