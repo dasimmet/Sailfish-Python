@@ -19,7 +19,7 @@ def replaceInFile(oldname,newname,filename):
     maketxt=makefile.read()
     makefile.close()
     makefile=open(filename,"w")
-    makefile.write(re.sub("Appname:="+oldname,"Appname:="+newname,maketxt))
+    makefile.write(re.sub(oldname,newname,maketxt))
     makefile.close()
 
 for filename in ["./Makefile","./dat/"+newname+".desktop"]:
