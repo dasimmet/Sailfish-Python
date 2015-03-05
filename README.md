@@ -14,13 +14,16 @@ fpm -- to package a a root tree from a temporary directory to a rpm package
 use these make commands to build/install your app for testing:
 
 `make make-virt`
-build your package, and install it on your Sailfish Emulator on localhost:2223, considering your Sailfish-SDK is installed at ~/SailfishOS
+
+builds your package, and installs it on your Sailfish Emulator on localhost:2223, considering your Sailfish-SDK is installed at ~/SailfishOS
 
 `make make-jolla-wifi`
-build your package, and install it on your jolla phone, considering your development PC is authorized for root ssh login on the phone and it is found in your dns-space as "jolla"
+
+builds your package, and installs it on your jolla phone, considering your development PC is authorized for root ssh login on the phone and it is found in your dns-space as "jolla"
 
 `make make-jolla-usb [jolla_usb_ip=192.168.2.15]`
-build your package, and install it on your jolla phone, considering your development PC is authorized for root ssh login on the phone, and connected via usb development mode set your jollas ip like above.
+
+builds your package, and installs it on your jolla phone, considering your development PC is authorized for root ssh login on the phone, and connected via usb development mode set your jollas ip like above.
 
 
 ## Adding dependencies:
