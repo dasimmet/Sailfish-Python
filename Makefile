@@ -1,6 +1,6 @@
 Appname:=$(shell cat appname.txt)
 prefix:=/usr
-temp:=/tmp/fpm
+temp:=/tmp/fpm-jolla
 builddir:=./build
 sdkpath:=$(HOME)/SailfishOS
 dependencies=$(shell for file in `cat dependencies.txt`;do echo "-d "$${file};done;)
@@ -32,30 +32,21 @@ build-tmp:
 rpm-virt:
 	cd $(temp);fpm -f -s dir -t rpm $(dependencies) -p $(CURDIR)/$(rpmname) -n $(Appname) -a $(arch) --prefix / *
 
-rpm-jolla: arch:=noarch
 rpm-jolla:
 	cd $(temp);fpm -f -s dir -t rpm $(dependencies) -p $(CURDIR)/$(rpmname) -n $(Appname) -a $(arch) --prefix / *
 
 send-virt:
-	rsync -vrp --rsh='ssh -p2223 -i $(sdkpath)/vmshare/ssh/private_keys/SailfishOS_Emulator/root' ./$(rpmname) root@localhost:/tmp
-	ssh -p2223 -i $(sdkpath)/vmshare/ssh/private_keys/SailfishOS_Emulator/root root@localhost pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
+	cat ./$(rpmname) | ssh -p2223 -i $(sdkpath)/vmshare/ssh/private_keys/SailfishOS_Emulator/root root@localhost cat ">>" /tmp/$(rpmname) "&&" pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
 	
-send-jolla-wifi: arch:=noarch
 send-jolla-wifi:
-	rsync -vrp ./$(rpmname) root@$(jolla_wifi_ip):/tmp
-	ssh root@$(jolla_wifi_ip) pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
+	cat ./$(rpmname) | ssh root@$(jolla_wifi_ip) cat ">>" /tmp/$(rpmname) "&&" pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
 
-send-jolla-ap: arch:=noarch 
 send-jolla-ap: jolla_wifi_ip:=192.168.1.1
 send-jolla-ap:
-	rsync -vrp ./$(rpmname) root@$(jolla_wifi_ip):/tmp
-	ssh root@$(jolla_wifi_ip) pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
+	cat ./$(rpmname) | ssh root@$(jolla_wifi_ip) cat ">>" /tmp/$(rpmname) "&&" pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
 
-send-jolla: arch:=noarch
 send-jolla:
-	rsync -vrp ./$(Appname)-$(arch).rpm root@$(jolla_usb_ip):/tmp
-	ssh root@$(jolla_usb_ip) pkcon install-local -y /tmp/$(Appname)-$(arch).rpm "&&" rm /tmp/$(Appname)-$(arch).rpm
-
+	cat ./$(rpmname) | ssh root@$(jolla_usb_ip) cat ">>" /tmp/$(rpmname) "&&" pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
 
 clean: 
 	rm -rf $(temp)
