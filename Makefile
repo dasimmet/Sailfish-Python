@@ -4,7 +4,7 @@ temp:=/tmp/fpm-jolla
 builddir:=./build
 sdkpath:=$(HOME)/SailfishOS
 dependencies=$(shell for file in `cat dependencies.txt`;do echo "-d "$${file};done;)
-arch:=noarch
+arch:=armv7hl
 rpmname:=$(Appname)-$(arch).rpm
 jolla_usb_ip:=192.168.2.15
 jolla_wifi_ip:=Jolla
@@ -21,12 +21,11 @@ make-virt: build-tmp rpm-virt send-virt
 build-tmp: 
 	rm -rf $(temp)
 	mkdir -p $(temp)/usr/share/applications
-	mkdir -p $(temp)/usr/share/$(Appname)/src
-	mkdir -p $(temp)/usr/share/$(Appname)/src
+	mkdir -p $(temp)/usr/share/$(Appname)/src/pyPackages
 	mkdir -p $(temp)/usr/bin
 	cp -ar ./qml $(temp)/usr/share/$(Appname)
 	cp -ar ./src/*.py $(temp)/usr/share/$(Appname)/src
-	cp -ar ./pyPackages $(temp)/usr/share/$(Appname)/src
+	cp -ar ./pyPackages/*$(arch) $(temp)/usr/share/$(Appname)/src/pyPackages
 	cp ./dat/$(Appname).desktop $(temp)/usr/share/applications/
 	install -m 755 ./dat/$(Appname).sh $(temp)/usr/bin/$(Appname)
 

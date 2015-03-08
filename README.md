@@ -29,9 +29,9 @@ builds your package, and installs it on your jolla phone, considering your devel
 ## Adding dependencies:
 a basic set of dependencies for python3 apps are already added to dependencies.txt, but you can still add other ones to the list.
 
-Adding python Modules:
-all python Modules in pyPackages are included in the package. 
-for now, i like to package both an armv7l and a x86 version and select the package version within the qml code. Packages are built with "noarch", so they should run an any device. I had success using pip wheel to build these packages directly on the jolla phone/sailfish emulator and unpacking them to pyPackages. As an example, the is pillow (Python Imaging Library) included in the package.
+##Adding python Modules:
+all python Modules in pyPackages (suffixed correctly) are included in the package. 
+I like to keep both an armv7l and a x86 version in pyPackages , and package the one with the corresponding $(arch)-suffix at packaging. Select the package version within the qml code. I had success using pip wheel to build these packages directly on the jolla phone(armv7hl)/sailfish emulator(x86) and unpacking them to pyPackages. As an example, pillow (Python Imaging Library) is included in the repo.
 
 ## Renaming your App:
 `/renamep.py "my-new-appname"`
