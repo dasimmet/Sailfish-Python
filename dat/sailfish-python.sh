@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sailfish-qml sailfish-scanner
+sailfish-qml sailfish-python
 

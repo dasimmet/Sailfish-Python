@@ -17,7 +17,7 @@ use these make commands to build/install your app for testing:
 
 builds your package, and installs it on your Sailfish Emulator on localhost:2223, considering your Sailfish-SDK is installed at ~/SailfishOS
 
-`make make-jolla-wifi`
+`make make-jolla-wifi [jolla_wifi_ip=jolla]`
 
 builds your package, and installs it on your jolla phone, considering your development PC is authorized for root ssh login on the phone and it is found in your dns-space as "jolla"
 
