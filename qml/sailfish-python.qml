@@ -11,9 +11,9 @@ ApplicationWindow {
             py.addImportPath(Qt.resolvedUrl('../src'));
             py.importModule_sync("os")
             if (py.evaluate("os.uname().machine") == "armv7l"){
-                py.addImportPath(Qt.resolvedUrl('../src/pyPackages/pillowarmv7l'));
+                py.addImportPath(Qt.resolvedUrl('../src/pyPackages/pillow-armv7hl'));
             } else {
-                py.addImportPath(Qt.resolvedUrl('../src/pyPackages/pillowx86'));
+                py.addImportPath(Qt.resolvedUrl('../src/pyPackages/pillow-x86'));
             }
             py.importModule('main',function(){
             py.call("helloworld",[])

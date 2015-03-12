@@ -1,14 +1,13 @@
 Appname:=$(shell cat appname.txt)
 prefix:=/usr
 temp:=/tmp/fpm-jolla
-builddir:=./build
 sdkpath:=$(HOME)/SailfishOS
 dependencies=$(shell for file in `cat dependencies.txt`;do echo "-d "$${file};done;)
 arch:=armv7hl
-rpmname:=$(Appname)-$(arch).rpm
+version:=0.0.1
+rpmname:=$(Appname)-$(version).$(arch).rpm
 jolla_usb_ip:=192.168.2.15
 jolla_wifi_ip:=Jolla
-jolla_ip:=$(jolla_usb_ip)
 
 
 all: clean build-tmp rpm-virt rpm-jolla
@@ -16,6 +15,7 @@ all: clean build-tmp rpm-virt rpm-jolla
 make-jolla-usb: build-tmp rpm-jolla send-jolla
 make-jolla-wifi: build-tmp rpm-jolla send-jolla-wifi
 make-jolla-ap: build-tmp rpm-jolla send-jolla-ap
+make-virt: arch:=i686
 make-virt: build-tmp rpm-virt send-virt
 
 build-tmp: 
@@ -29,14 +29,15 @@ build-tmp:
 	cp ./dat/$(Appname).desktop $(temp)/usr/share/applications/
 	install -m 755 ./dat/$(Appname).sh $(temp)/usr/bin/$(Appname)
 
-rpm-virt:
-	cd $(temp);fpm -f -s dir -t rpm $(dependencies) -p $(temp)/$(rpmname) -n $(Appname) -a $(arch) --prefix / *
+rpm-virt: arch:=i686
+rpm-virt: build-tmp
+	cd $(temp);fpm -f -s dir -t rpm -v $(version) $(dependencies) -p $(temp)/$(rpmname) -n $(Appname) -a $(arch) --prefix / *
 
-rpm-jolla:
-	cd $(temp);fpm -f -s dir -t rpm $(dependencies) -p $(temp)/$(rpmname) -n $(Appname) -a $(arch) --prefix / *
+rpm-jolla: build-tmp
+	cd $(temp);fpm -f -s dir -t rpm -v $(version) $(dependencies) -p $(temp)/$(rpmname) -n $(Appname) -a $(arch) --prefix / *
 
 send-virt:
-	cat $(temp)/$(rpmname) | ssh -p2223 -i $(sdkpath)/vmshare/ssh/private_keys/SailfishOS_Emulator/root root@localhost cat ">>" /tmp/$(rpmname) "&&" pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
+	cat $(temp)/$(rpmname) | ssh -i '$(sdkpath)/vmshare/ssh/private_keys/SailfishOS_Emulator/root' -p2223 root@localhost cat ">>" /tmp/$(rpmname) "&&" pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
 	
 send-jolla-wifi:
 	cat $(temp)/$(rpmname) | ssh root@$(jolla_wifi_ip) cat ">>" /tmp/$(rpmname) "&&" pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
@@ -47,6 +48,7 @@ send-jolla-ap:
 
 send-jolla:
 	cat $(temp)/$(rpmname) | ssh root@$(jolla_usb_ip) cat ">>" /tmp/$(rpmname) "&&" pkcon install-local -y /tmp/$(rpmname) "&&" rm /tmp/$(rpmname)
+
 
 clean: 
 	rm -rf $(temp)
