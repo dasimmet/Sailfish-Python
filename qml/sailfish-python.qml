@@ -13,7 +13,7 @@ ApplicationWindow {
             if (py.evaluate("os.uname().machine") == "armv7l"){
                 py.addImportPath(Qt.resolvedUrl('../src/pyPackages/pillow-armv7hl'));
             } else {
-                py.addImportPath(Qt.resolvedUrl('../src/pyPackages/pillow-x86'));
+                py.addImportPath(Qt.resolvedUrl('../src/pyPackages/pillow-i686'));
             }
             py.importModule('main',function(){
             py.call("helloworld",[])
