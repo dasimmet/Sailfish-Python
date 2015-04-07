@@ -23,11 +23,13 @@ build-tmp:
 	rm -rf $(temp)
 	mkdir -p $(temp)/usr/share/applications
 	mkdir -p $(temp)/usr/share/$(Appname)/src/pyPackages
+	mkdir -p $(temp)/usr/share/icons/hicolor/86x86/apps
 	mkdir -p $(temp)/usr/bin
 	cp -ar ./qml $(temp)/usr/share/$(Appname)
 	cp -ar ./src/*.py $(temp)/usr/share/$(Appname)/src
 	cp -ar ./pyPackages/*$(arch) $(temp)/usr/share/$(Appname)/src/pyPackages
 	cp ./dat/$(Appname).desktop $(temp)/usr/share/applications/
+	cp -ar ./dat/appicon.png $(temp)/usr/share/icons/hicolor/86x86/apps/$(Appname).png
 	install -m 755 ./dat/$(Appname).sh $(temp)/usr/bin/$(Appname)
 
 rpm-virt: arch:=i686
