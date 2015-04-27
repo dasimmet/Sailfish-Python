@@ -22,7 +22,7 @@ def replaceInFile(oldname,newname,filename):
     makefile.write(re.sub(oldname,newname,maketxt))
     makefile.close()
 
-for filename in ["./Makefile","./dat/"+newname+".desktop","./dat/"+newname+".sh"]:
+for filename in ["./Makefile","./dat/"+newname+".desktop","./dat/"+newname+".sh","./dat/removeScript.sh","./dat/upgradeScript.sh"]:
     replaceInFile(oldname,newname,filename)
 
 
