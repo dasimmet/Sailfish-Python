@@ -16,7 +16,7 @@ ApplicationWindow {
                 py.addImportPath(Qt.resolvedUrl('../src/pyPackages/pillow-i686'));
             }
             py.importModule('main',function(){
-            py.call("helloworld",[])
+            py.call("main.helloWorld",[])
             pageStack.push(Qt.resolvedUrl("Main.qml"))
             })
         }
